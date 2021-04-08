@@ -54,9 +54,9 @@ void filter_print(const IpPool& ip_pool, const size_t first, const size_t second
 {
     for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
     {
-        if (std::stoi(*(ip->cbegin())) == first)
+        if (std::stoll(*(ip->cbegin())) == first)
         {
-            if ((second != ULLONG_MAX && std::stoi(*(std::next(ip->cbegin()))) == second) ||
+            if ((second != ULLONG_MAX && std::stoll(*(std::next(ip->cbegin()))) == second) ||
                  second == ULLONG_MAX)
             {
                 print(*ip);
