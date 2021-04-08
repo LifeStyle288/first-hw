@@ -75,6 +75,7 @@ int main(int argc, char const *argv[])
                     }
                     return std::stoi(lhs[idx]) > std::stoi(rhs[idx]);
                 }
+                return false;
             });
 
             for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
