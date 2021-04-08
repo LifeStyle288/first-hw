@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
     {
     	if (argc > 1)
         {
-            cout << argv[1] << endl;
+            std::cout << argv[1] << std::endl;
         }
         std::vector<std::vector<std::string>> ip_pool;
 
