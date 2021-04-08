@@ -43,7 +43,7 @@ int main(int argc, char const *argv[])
         	
 	        std::vector<std::vector<std::string>> ip_pool;
 
-	        for (std::string line; std::getline(std::cin, line);)
+	        for (std::string line; std::getline(input, line);)
 	        {
 	            std::vector<std::string> v = split(line, '\t');
 	            ip_pool.emplace_back(split(v.at(0), '.'));
