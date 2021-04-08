@@ -66,7 +66,7 @@ int main(int argc, char const *argv[])
             }
 
             std::sort(ip_pool.begin(), ip_pool.end(), [](const auto& lhs, const auto& rhs){
-                assert(lhs.size() != rhs.size());
+                assert(lhs.size() == rhs.size());
                 for (size_t idx = 0; idx < lhs.size(); ++idx)
                 {
                     if (std::stoi(lhs[idx]) == std::stoi(rhs[idx]))
