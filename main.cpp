@@ -60,6 +60,7 @@ void filter_print(const IpPool& ip_pool, const int first, const int second = INT
                  second == INT_MAX)
             {
                 print(*ip);
+                std::cout << std::endl;
             }
         }
     }
@@ -72,6 +73,7 @@ void filter_any_print(const IpPool& ip_pool, const int value)
         if (std::find(ip->cbegin(), ip->cend(), std::to_string(value)) != ip->cend())
         {
             print(*ip);
+            std::cout << std::endl;
         }
     }   
 }
