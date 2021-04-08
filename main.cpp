@@ -40,7 +40,7 @@ int main(int argc, char const *argv[])
     	if (argc > 1)
         {
         	std::ifstream input(argv[1]);
-        	
+
 	        std::vector<std::vector<std::string>> ip_pool;
 
 	        for (std::string line; std::getline(input, line);)
@@ -49,7 +49,7 @@ int main(int argc, char const *argv[])
 	            ip_pool.emplace_back(split(v.at(0), '.'));
 	        }
 
-	        // TODO reverse lexicographically sort
+	        std::sort(ip_pool.begin(), ip_pool.end(), std::greater<>());
 
 	        for (std::vector<std::vector<std::string>>::const_iterator ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
 	        {
