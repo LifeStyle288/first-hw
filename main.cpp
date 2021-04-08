@@ -5,7 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
-#include <limits>
+#include <climits>
 #include <iterator>
 
 #include "lib.h"
@@ -50,7 +50,7 @@ void print(const StringsVector& strings)
     }
 }
 
-void filter_print(const size_t first, const size_t second = ULLONG_MAX)
+void filter_print(const IpPool& ip_pool, const size_t first, const size_t second = ULLONG_MAX)
 {
     for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
     {
@@ -65,7 +65,7 @@ void filter_print(const size_t first, const size_t second = ULLONG_MAX)
     }
 }
 
-void filter_any_print(const size_t value)
+void filter_any_print(const IpPool& ip_pool, const size_t value)
 {
     for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
     {
@@ -120,7 +120,7 @@ int main(int argc, char const *argv[])
             // 1.29.168.152
             // 1.1.234.8
 
-            filter_print(1);
+            filter_print(ip_pool, 1);
 
             // 1.231.69.33
             // 1.87.203.225
@@ -128,14 +128,14 @@ int main(int argc, char const *argv[])
             // 1.29.168.152
             // 1.1.234.8
 
-            filter_print(46, 70)
+            filter_print(ip_pool, 46, 70)
 
             // 46.70.225.39
             // 46.70.147.26
             // 46.70.113.73
             // 46.70.29.76
 
-            ip = filter_any_print(46);
+            ip = filter_any_print(ip_pool, 46);
 
             // 186.204.34.46
             // 186.46.222.194
