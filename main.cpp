@@ -36,6 +36,10 @@ int main(int argc, char const *argv[])
 	std::cout << "Build: " << version() << std::endl;
     try
     {
+    	if (argc > 1)
+        {
+            cout << argv[1] << endl;
+        }
         std::vector<std::vector<std::string>> ip_pool;
 
         for (std::string line; std::getline(std::cin, line);)
