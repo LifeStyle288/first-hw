@@ -65,7 +65,17 @@ int main(int argc, char const *argv[])
                 ip_pool.emplace_back(split(v.at(0), '.'));
             }
 
-            std::sort(ip_pool.begin(), ip_pool.end(), std::greater<>());
+            std::sort(ip_pool.begin(), ip_pool.end(), [](const auto& lhs, const auto& rhs){
+                assert(lhs.size() != rhs.size());
+                for (size_t idx = 0; idx < lhs.size(); ++idx)
+                {
+                    if (std::stoi(lhs[idx]) == std::stoi(rhs[idx]))
+                    {
+                        continue;
+                    }
+                    return std::stoi(lhs[idx]) > std::stoi(rhs[idx]);
+                }
+            });
 
             for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
             {
