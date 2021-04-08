@@ -5,6 +5,8 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <limits>
+#include <iterator>
 
 #include "lib.h"
 
@@ -46,6 +48,32 @@ void print(const StringsVector& strings)
         }
         std::cout << *ip_part;
     }
+}
+
+void filter_print(const size_t first, const size_t second = ULLONG_MAX)
+{
+    for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
+    {
+        if (std::stoi(*(ip->cbegin())) == first)
+        {
+            if ((second != ULLONG_MAX && std::stoi(*(std::next(ip->cbegin()))) == second) ||
+                 second == ULLONG_MAX)
+            {
+                print(*ip);
+            }
+        }
+    }
+}
+
+void filter_any_print(const size_t value)
+{
+    for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
+    {
+        if (std::find(ip->cbegin(), ip->cend(), std::to_string(value)) != ip->cend())
+        {
+            print(*ip);
+        }
+    }   
 }
 
 int main(int argc, char const *argv[])
@@ -92,8 +120,7 @@ int main(int argc, char const *argv[])
             // 1.29.168.152
             // 1.1.234.8
 
-            // TODO filter by first byte and output
-            // ip = filter(1)
+            filter_print(1);
 
             // 1.231.69.33
             // 1.87.203.225
@@ -101,16 +128,14 @@ int main(int argc, char const *argv[])
             // 1.29.168.152
             // 1.1.234.8
 
-            // TODO filter by first and second bytes and output
-            // ip = filter(46, 70)
+            filter_print(46, 70)
 
             // 46.70.225.39
             // 46.70.147.26
             // 46.70.113.73
             // 46.70.29.76
 
-            // TODO filter by any byte and output
-            // ip = filter_any(46)
+            ip = filter_any_print(46);
 
             // 186.204.34.46
             // 186.46.222.194
