@@ -50,13 +50,13 @@ void print(const StringsVector& strings)
     }
 }
 
-void filter_print(const IpPool& ip_pool, const size_t first, const size_t second = ULLONG_MAX)
+void filter_print(const IpPool& ip_pool, const int first, const int second = ULLONG_MAX)
 {
     for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
     {
-        if (std::stoll(*(ip->cbegin())) == first)
+        if (std::stoi(*(ip->cbegin())) == first)
         {
-            if ((second != ULLONG_MAX && std::stoll(*(std::next(ip->cbegin()))) == second) ||
+            if ((second != ULLONG_MAX && std::stoi(*(std::next(ip->cbegin()))) == second) ||
                  second == ULLONG_MAX)
             {
                 print(*ip);
@@ -65,7 +65,7 @@ void filter_print(const IpPool& ip_pool, const size_t first, const size_t second
     }
 }
 
-void filter_any_print(const IpPool& ip_pool, const size_t value)
+void filter_any_print(const IpPool& ip_pool, const int value)
 {
     for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
     {
@@ -128,7 +128,7 @@ int main(int argc, char const *argv[])
             // 1.29.168.152
             // 1.1.234.8
 
-            filter_print(ip_pool, 46, 70)
+            filter_print(ip_pool, 46, 70);
 
             // 46.70.225.39
             // 46.70.147.26
