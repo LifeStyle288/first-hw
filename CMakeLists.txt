@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.2)
 
 if (GITHUB_RUN_NUMBER)
+    message(STATUS "Find number")
     project(helloworld VERSION 0.0.$ENV{GITHUB_RUN_NUMBER})
     find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 else ()
+    message(STATUS "Don't find number")
     project(helloworld)
 endif()
 
