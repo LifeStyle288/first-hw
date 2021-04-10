@@ -47,9 +47,9 @@ if (MSVC)
         /W4
     )
     if (Boost_FOUND)
-    target_compile_options(${TEST_VERSION} PRIVATE
-        /W4
-    )
+        target_compile_options(${TEST_VERSION} PRIVATE
+            /W4
+        )
     endif ()
 else ()
     target_compile_options(helloworld_cli PRIVATE
@@ -59,13 +59,11 @@ else ()
         -Wall -Wextra -pedantic -Werror
     )
     if (Boost_FOUND)
-    target_compile_options(${TEST_VERSION} PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
+        target_compile_options(${TEST_VERSION} PRIVATE
+            -Wall -Wextra -pedantic -Werror
+        )
     endif()
 endif()
-
-
 
 install(TARGETS helloworld_cli RUNTIME DESTINATION bin)
 
@@ -81,5 +79,5 @@ include(CPack)
 enable_testing()
 
 if (Boost_FOUND)
-    add_test(${TEST_VERSION} ${TEST_VERSION})
+    add_test(test_version ${TEST_VERSION})
 endif ()
