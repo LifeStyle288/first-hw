@@ -10,15 +10,18 @@
 
 #include "lib.h"
 
+typedef std::vector<std::string> StringsVector;
+typedef std::vector<StringsVector> IpPool;
+
 // ("",  '.') -> [""]
 // ("11", '.') -> ["11"]
 // ("..", '.') -> ["", "", ""]
 // ("11.", '.') -> ["11", ""]
 // (".11", '.') -> ["", "11"]
 // ("11.22", '.') -> ["11", "22"]
-std::vector<std::string> split(const std::string& str, char d)
+StringsVector split(const std::string& str, char d)
 {
-    std::vector<std::string> r;
+    StringsVector r;
 
     std::string::size_type start = 0;
     std::string::size_type stop = str.find_first_of(d);
@@ -34,9 +37,6 @@ std::vector<std::string> split(const std::string& str, char d)
 
     return r;
 }
-
-typedef std::vector<std::vector<std::string>> IpPool;
-typedef std::vector<std::string> StringsVector;
 
 void print(const StringsVector& strings)
 {
@@ -91,7 +91,7 @@ int main(int argc, char const *argv[])
 
             for (std::string line; std::getline(input, line);)
             {
-                std::vector<std::string> v = split(line, '\t');
+                StringsVector v = split(line, '\t');
                 ip_pool.emplace_back(split(v.at(0), '.'));
             }
 
@@ -99,7 +99,7 @@ int main(int argc, char const *argv[])
                 assert(lhs.size() == rhs.size());
                 for (size_t idx = 0; idx < lhs.size(); ++idx)
                 {
-                    if (std::stoi(lhs[idx]) == std::stoi(rhs[idx]))
+                    if (lhs[idx] == rhs[idx])
                     {
                         continue;
                     }
