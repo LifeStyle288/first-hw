@@ -13,16 +13,16 @@ add_executable(helloworld_cli main.cpp)
 add_library(helloworld lib.cpp)
 
 if (Boost_FOUND)
-    set(TEST_VERSION test_version)
-    add_executable(${TEST_VERSION} test_version.cpp)
-    set_target_properties(${TEST_VERSION} PROPERTIES
+    add_executable(test_version test_version.cpp)
+    set_target_properties(test_version PROPERTIES
         COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
         INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
     )
-    target_link_libraries(${TEST_VERSION}
+    target_link_libraries(test_version
         ${Boost_LIBRARIES}
         helloworld
     )
+    set(TEST_VERSION test_version)
 else ()
     set(TEST_VERSION)
 endif()
@@ -47,7 +47,7 @@ if (MSVC)
         /W4
     )
     if (Boost_FOUND)
-        target_compile_options(${TEST_VERSION} PRIVATE
+        target_compile_options(test_version PRIVATE
             /W4
         )
     endif ()
@@ -59,11 +59,13 @@ else ()
         -Wall -Wextra -pedantic -Werror
     )
     if (Boost_FOUND)
-        target_compile_options(${TEST_VERSION} PRIVATE
+        target_compile_options(test_version PRIVATE
             -Wall -Wextra -pedantic -Werror
         )
     endif()
 endif()
+
+
 
 install(TARGETS helloworld_cli RUNTIME DESTINATION bin)
 
@@ -78,6 +80,4 @@ include(CPack)
 
 enable_testing()
 
-if (Boost_FOUND)
-    add_test(test_version ${TEST_VERSION})
-endif ()
+add_test(test_version test_version)
