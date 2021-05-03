@@ -15,7 +15,7 @@ add_executable(helloworld_cli main.cpp)
 add_library(helloworld lib.cpp ip_filter.cpp)
 
 if (Boost_FOUND)
-    add_executable(test_version test_version.cpp test_add_and_sort.cpp)
+    add_executable(test_version test_version.cpp)
     set_target_properties(test_version PROPERTIES
         COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
         INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
