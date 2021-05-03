@@ -8,14 +8,14 @@
 
 BOOST_AUTO_TEST_SUITE(test_version)
 
-BOOST_AUTO_TEST_CASE(test_valid_version)
-{
-    BOOST_CHECK(version() > 0);
-}
+// BOOST_AUTO_TEST_CASE(test_valid_version)
+// {
+//     BOOST_CHECK(version() > 0);
+// }
 
-BOOST_AUTO_TEST_SUITE_END()
+// BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(test_add_and_sort)
+// BOOST_AUTO_TEST_SUITE(test_add_and_sort)
 
 BOOST_AUTO_TEST_CASE(testing_add_and_sort)
 {
