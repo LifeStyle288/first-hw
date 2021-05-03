@@ -2,7 +2,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <iostream>
 #include <sstream>
 #include "lib.h"
 #include "ip_filter.h"
@@ -32,14 +31,9 @@ BOOST_AUTO_TEST_CASE(test_add_and_sort)
 
     const StringsVector values(ip_filter::split(os.str(), '\n'));
 
-    const StringsVector sample = {"1.1.51.189", "1.1.52.188", "2.5.64.21", "2.5.64.23", "3.7.8.251", "10.1.31.71"};
+    const StringsVector sample = {"10.1.31.71", "3.7.8.251", "2.5.64.23", "2.5.64.21", "1.1.52.188", "1.1.51.189"};
 
-    for (const auto& value : values) 
-    {
-        std::cout << value << '\n';
-    }
-
-    BOOST_CHECK_EQUAL(sample, values);
+    BOOST_CHECK_EQUAL_COLLECTIONS(sample.begin(), sample.end(), values.begin(), values.end());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
