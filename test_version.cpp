@@ -2,10 +2,10 @@
 
 #include <sstream>
 
+#include <boost/test/unit_test.hpp>
+
 #include "lib.h"
 #include "ip_filter.h"
-
-#include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(test_version)
 
@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_CASE(test_valid_version)
     BOOST_CHECK(version() > 0);
 }
 
-BOOST_AUTO_TEST_CASE(add_and_sort_test)
+BOOST_AUTO_TEST_CASE(test_add_and_sort)
 {
     ip_filter::Filter filter;
     filter.Add(ip_filter::split("10.1.31.71", '.'));
