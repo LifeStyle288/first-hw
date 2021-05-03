@@ -12,7 +12,7 @@ endif()
 configure_file(version.h.in version.h)
 
 add_executable(helloworld_cli main.cpp)
-add_library(helloworld lib.cpp)
+add_library(helloworld lib.cpp ip_filter.cpp)
 
 if (Boost_FOUND)
     add_executable(test_version test_version.cpp)

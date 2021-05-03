@@ -1,17 +1,10 @@
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
-#include <string>
-#include <vector>
 #include <fstream>
-#include <algorithm>
-#include <climits>
-#include <iterator>
 
+#include "ip_filter.h"
 #include "lib.h"
-
-typedef std::vector<std::string> StringsVector;
-typedef std::vector<StringsVector> IpPool;
 
 // ("",  '.') -> [""]
 // ("11", '.') -> ["11"]
@@ -19,64 +12,7 @@ typedef std::vector<StringsVector> IpPool;
 // ("11.", '.') -> ["11", ""]
 // (".11", '.') -> ["", "11"]
 // ("11.22", '.') -> ["11", "22"]
-StringsVector split(const std::string& str, char d)
-{
-    StringsVector r;
 
-    std::string::size_type start = 0;
-    std::string::size_type stop = str.find_first_of(d);
-    while (stop != std::string::npos)
-    {
-        r.emplace_back(str.substr(start, stop - start));
-
-        start = stop + 1;
-        stop = str.find_first_of(d, start);
-    }
-
-    r.emplace_back(str.substr(start));
-
-    return r;
-}
-
-void print(const StringsVector& strings)
-{
-    for (auto ip_part = strings.cbegin(); ip_part != strings.cend(); ++ip_part)
-    {
-        if (ip_part != strings.cbegin())
-        {
-            std::cout << ".";
-        }
-        std::cout << *ip_part;
-    }
-}
-
-void filter_print(const IpPool& ip_pool, const int first, const int second = INT_MAX)
-{
-    for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-    {
-        if (std::stoi(*(ip->cbegin())) == first)
-        {
-            if ((second != INT_MAX && std::stoi(*(std::next(ip->cbegin()))) == second) ||
-                 second == INT_MAX)
-            {
-                print(*ip);
-                std::cout << std::endl;
-            }
-        }
-    }
-}
-
-void filter_any_print(const IpPool& ip_pool, const int value)
-{
-    for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-    {
-        if (std::find(ip->cbegin(), ip->cend(), std::to_string(value)) != ip->cend())
-        {
-            print(*ip);
-            std::cout << std::endl;
-        }
-    }   
-}
 
 int main(int argc, char const *argv[])
 {
@@ -87,32 +23,16 @@ int main(int argc, char const *argv[])
         {
             std::ifstream input(argv[1]);
 
-            IpPool ip_pool;
+            ip_filter::Filter filter;
 
             for (std::string line; std::getline(input, line);)
             {
-                StringsVector v = split(line, '\t');
-                ip_pool.emplace_back(split(v.at(0), '.'));
+                StringsVector v = ip_filter::split(line, '\t');
+                filter.Add(ip_filter::split(v.at(0), '.'));
             }
 
-            std::sort(ip_pool.begin(), ip_pool.end(), [](const auto& lhs, const auto& rhs){
-                assert(lhs.size() == rhs.size());
-                for (size_t idx = 0; idx < lhs.size(); ++idx)
-                {
-                    if (lhs[idx] == rhs[idx])
-                    {
-                        continue;
-                    }
-                    return std::stoi(lhs[idx]) > std::stoi(rhs[idx]);
-                }
-                return false;
-            });
-
-            for (auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-            {
-                print(*ip);
-                std::cout << std::endl;
-            }
+            filter.Sort();
+            filter.PrintAll(std::cout);
 
             // 222.173.235.246
             // 222.130.177.64
@@ -122,7 +42,7 @@ int main(int argc, char const *argv[])
             // 1.29.168.152
             // 1.1.234.8
 
-            filter_print(ip_pool, 1);
+            filter.PrintSortedRange(std::cout, 1);
 
             // 1.231.69.33
             // 1.87.203.225
@@ -130,14 +50,14 @@ int main(int argc, char const *argv[])
             // 1.29.168.152
             // 1.1.234.8
 
-            filter_print(ip_pool, 46, 70);
+            filter.PrintSortedRange(std::cout, 46, 70);
 
             // 46.70.225.39
             // 46.70.147.26
             // 46.70.113.73
             // 46.70.29.76
 
-            filter_any_print(ip_pool, 46);
+            filter.PrintSortedValue(std::cout, 46);
 
             // 186.204.34.46
             // 186.46.222.194
@@ -182,4 +102,3 @@ int main(int argc, char const *argv[])
 
     return 0;
 }
-
