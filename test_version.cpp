@@ -1,3 +1,5 @@
+#pragma once
+
 #define BOOST_TEST_MODULE test_version
 
 #include <sstream>

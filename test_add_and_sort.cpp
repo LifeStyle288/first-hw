@@ -1,10 +1,12 @@
+#pragma once
+
 #define BOOST_TEST_MODULE test_add_and_sort
 
-#include <sstream>
 
 #include <boost/test/unit_test.hpp>
 
 #include "ip_filter.h"
+#include <sstream>
 
 BOOST_AUTO_TEST_SUITE(test_add_and_sort)
 
