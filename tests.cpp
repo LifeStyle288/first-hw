@@ -78,4 +78,37 @@ BOOST_AUTO_TEST_CASE(test_sort_range)
     }
 }
 
+BOOST_AUTO_TEST_CASE(test_sort_value)
+{
+    ip_filter::Filter filter;
+    filter.Add(ip_filter::split("10.1.78.71", '.'));
+    filter.Add(ip_filter::split("1.78.52.188", '.'));
+    filter.Add(ip_filter::split("1.1.51.189", '.'));
+    filter.Add(ip_filter::split("2.5.64.21", '.'));
+    filter.Add(ip_filter::split("2.5.78.23", '.'));
+    filter.Add(ip_filter::split("3.7.8.251", '.'));
+    filter.Add(ip_filter::split("3.7.52.145", '.'));
+    filter.Add(ip_filter::split("3.7.58.78", '.'));
+    filter.Add(ip_filter::split("3.7.165.121", '.'));
+    filter.Add(ip_filter::split("3.7.54.165", '.'));
+    filter.Add(ip_filter::split("3.78.98.97", '.'));
+    filter.Add(ip_filter::split("3.7.80.80", '.'));
+    filter.Add(ip_filter::split("3.5.45.45", '.'));
+    filter.Add(ip_filter::split("3.6.78.187", '.'));
+    filter.Add(ip_filter::split("3.9.11.1", '.'));
+    filter.Add(ip_filter::split("3.78.25.238", '.'));
+
+    filter.Sort();
+
+    {
+        std::ostringstream os;
+
+        filter.PrintSortedValue(os, 78);
+
+        const StringsVector values(ip_filter::split(os.str(), '\n'));
+        const StringsVector sample = {"10.1.78.71", "3.78.98.97", "3.78.25.238", "3.7.58.78", "3.6.78.187", "2.5.78.23", "1.78.52.188"};
+        BOOST_CHECK_EQUAL_COLLECTIONS(sample.begin(), sample.end(), values.begin(), values.end());
+    }
+}
+
 BOOST_AUTO_TEST_SUITE_END()
