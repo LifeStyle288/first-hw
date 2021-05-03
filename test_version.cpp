@@ -8,16 +8,12 @@
 
 BOOST_AUTO_TEST_SUITE(test_version)
 
-// BOOST_AUTO_TEST_CASE(test_valid_version)
-// {
-//     BOOST_CHECK(version() > 0);
-// }
+BOOST_AUTO_TEST_CASE(test_valid_version)
+{
+    BOOST_CHECK(version() > 0);
+}
 
-// BOOST_AUTO_TEST_SUITE_END()
-
-// BOOST_AUTO_TEST_SUITE(test_add_and_sort)
-
-BOOST_AUTO_TEST_CASE(testing_add_and_sort)
+BOOST_AUTO_TEST_CASE(test_add_and_sort)
 {
     ip_filter::Filter filter;
     filter.Add(ip_filter::split("10.1.31.71", '.'));
@@ -37,7 +33,12 @@ BOOST_AUTO_TEST_CASE(testing_add_and_sort)
 
     const StringsVector sample = {"1.1.51.189", "1.1.52.188", "2.5.64.21", "2.5.64.23", "3.7.8.251", "10.1.31.71"};
 
-    BOOST_CHECK(sample == values);
+    for (const auto& value : values) 
+    {
+        std::cout << value << '\n';
+    }
+
+    BOOST_CHECK_EQUAL(sample, values);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
