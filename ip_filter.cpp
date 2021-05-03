@@ -95,7 +95,10 @@ StringsVector split(const std::string& str, const char d)
         stop = str.find_first_of(d, start);
     }
 
-    r.emplace_back(str.substr(start));
+    if (!str.substr(start).empty())
+    {
+        r.emplace_back(str.substr(start));
+    }
 
     return r;
 }
