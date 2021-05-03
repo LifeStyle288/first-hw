@@ -2,6 +2,7 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <iostream>
 #include <sstream>
 #include "lib.h"
 #include "ip_filter.h"
